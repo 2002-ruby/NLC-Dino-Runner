@@ -1,17 +1,21 @@
 from pygame.sprite import Sprite
+
+from components import obstacles
 from utils.constants import SCREEN_WIDTH
 
 
-class Obstacles(Sprite):
+class Obstacle(Sprite):
 
-    def __init__(self, image, obstacle_type):
+    def __init__(self, image, index):
         self.image = image
-        self.obstacle_type = obstacle_type
-        self.rect = self.image[self.obstacle_typetype].get_rect()
+        self.index = index
+        self.rect = self.image[self.index].get_rect()
         self.rect.x = SCREEN_WIDTH
 
-    def update(self, *args, **kwargs) -> None:
-        pass
+    def update(self, obstacle):
+        self.rect.x -= 10
+        if self.rect.x < -self.rect.width:
+            obstacles.pop()
 
-    def draw(self):
-        pass
+    def draw(self, screen):
+        screen.blit(self.image[self.index], self.rect)

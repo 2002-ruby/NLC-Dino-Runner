@@ -1,14 +1,10 @@
-from components.obstacles.obstacles import Obstacles
+from components.obstacles.obstacles import Obstacle
+import random
 
 
-class Cactus(Obstacles):
+class Cactus(Obstacle):
     def __init__(self, image):
-        self.type = random.randint(0, 2)
-        super().__init__(image, self.type)
-        self.rect.y = 325
+        self.index = random.randint(0, 2)
+        super().__init__(image, self.index)
+        self.rect.y = 320
 
-    def update(self, *args, **kwargs) -> None:
-        pass
-
-    def draw(self):
-        pass
