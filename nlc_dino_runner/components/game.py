@@ -1,6 +1,7 @@
 import pygame
 from components.obstacles.cactus import Cactus
 from components.obstacles.obstacle_manager import ObstacleManager
+from components.powerups.power_up_manager import PowerUpManager
 from utils import text_utils
 from utils.constants import TITTLE, ICON, SCREEN_WIDTH, SCREEN_HEIGHT, BG, FPS, RUNNING
 from components.dinosaur import Dinosaur
@@ -22,11 +23,13 @@ class Game:
         self.obstacle_manager = ObstacleManager()
         self.points = 0
         self.death_count = 0
+        self.power_up_manager = PowerUpManager()
 
     def run(self):
         self.points = 0
         self.obstacle_manager.reset_obstacles()
         self.playing = True
+        self.create_components()
         while self.playing:
             self.events()
             self.update()
@@ -83,6 +86,7 @@ class Game:
         user_input = pygame.key.get_pressed()
         self.player.update(user_input)
         self.obstacle_manager.update(self)
+        self.power_up_manager.update(self.points, self.game_speed, self.player)
 
     def score(self):
         self.points += 1
@@ -91,6 +95,8 @@ class Game:
         score_element, score_element_rect = text_utils.get_score_element(self.points)
         self.screen.blit(score_element, score_element_rect)
 
+        self.player.check_invincibility(self.screen)
+
     def draw(self):
         self.clock.tick(FPS)
         self.screen.fill((255, 255, 255))
@@ -98,6 +104,7 @@ class Game:
         self.player.draw(self.screen)
         self.obstacle_manager.draw(self.screen)
         self.score()
+        self.power_up_manager.draw(self.screen)
         pygame.display.update()
         pygame.display.flip()
 
@@ -109,3 +116,8 @@ class Game:
             self.screen.blit(BG, (image_with + self.x_pos_bg, self.y_pos_bg))
             self.x_pos_bg = 0
         self.x_pos_bg -= self.game_speed
+
+    def create_components(self):
+        self.obstacle_manager.reset_obstacles(self)
+        self.power_up_manager.reset_power_ups(self.points)
+

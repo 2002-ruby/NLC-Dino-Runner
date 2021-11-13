@@ -15,10 +15,13 @@ class ObstacleManager:
         for obstacle in self.obstacles:
             obstacle.update(self.obstacles)
             if game.player.dino_rect.colliderect(obstacle.rect):
-                pygame.time.delay(500)
-                game.playing = False
-                game.death_count += 1
+                if not game.player.shield:
+                    pygame.time.delay(500)
+                    game.playing = False
+                    game.death_count += 1
                 break
+            else:
+                self.obstacles.remove(obstacle)
 
     def draw(self, screen):
         for obstacle in self.obstacles:
