@@ -1,4 +1,6 @@
 import pygame
+
+from components.hearts import PlayerHeartManager
 from components.obstacles.cactus import Cactus
 from components.obstacles.obstacle_manager import ObstacleManager
 from components.powerups.power_up_manager import PowerUpManager
@@ -16,7 +18,7 @@ class Game:
         self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
         self.clock = pygame.time.Clock()
         self.playing = False
-        self.game_speed = 20
+        self.game_speed = 15
         self.x_pos_bg = 0
         self.y_pos_bg = 380
         self.player = Dinosaur()
@@ -24,6 +26,7 @@ class Game:
         self.points = 0
         self.death_count = 0
         self.power_up_manager = PowerUpManager()
+        self.player_heart_manager = PlayerHeartManager()
 
     def run(self):
         self.points = 0
@@ -94,7 +97,6 @@ class Game:
             self.game_speed += 1
         score_element, score_element_rect = text_utils.get_score_element(self.points)
         self.screen.blit(score_element, score_element_rect)
-
         self.player.check_invincibility(self.screen)
 
     def draw(self):
@@ -105,6 +107,7 @@ class Game:
         self.obstacle_manager.draw(self.screen)
         self.score()
         self.power_up_manager.draw(self.screen)
+        self.player_heart_manager.draw(self.screen)
         pygame.display.update()
         pygame.display.flip()
 
@@ -118,6 +121,6 @@ class Game:
         self.x_pos_bg -= self.game_speed
 
     def create_components(self):
-        self.obstacle_manager.reset_obstacles(self)
+        self.obstacle_manager.reset_obstacles()
         self.power_up_manager.reset_power_ups(self.points)
-
+        self.player_heart_manager.reset_hearts()

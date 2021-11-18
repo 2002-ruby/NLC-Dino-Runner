@@ -5,7 +5,6 @@ from utils.constants import SCREEN_WIDTH
 
 
 class Obstacle(Sprite):
-
     def __init__(self, image, index):
         self.image = image
         self.index = index
@@ -19,3 +18,4 @@ class Obstacle(Sprite):
 
     def draw(self, screen):
         screen.blit(self.image[self.index], self.rect)
+
