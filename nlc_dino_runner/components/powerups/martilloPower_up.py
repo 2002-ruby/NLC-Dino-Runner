@@ -5,9 +5,9 @@ from utils.constants import (
 )
 
 
-class HammerPowerUp(PowerUp):
+class MartilloPowerUp(PowerUp):
     def __init__(self):
         self.image = HAMMER
         self.type = HAMMER_TYPE
-        super(HammerPowerUp, self).__init__(self.image, self.type )
+        super(MartilloPowerUp, self).__init__(self.image, self.type)
 

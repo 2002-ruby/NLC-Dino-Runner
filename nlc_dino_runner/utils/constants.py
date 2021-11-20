@@ -75,6 +75,6 @@ HAMMER_POWER_UP = 10
 
 DEFAULT_TYPE = "default"
 SHIELD_TYPE = "shield"
-HEART_COUNT = 4
+HEART_COUNT = 5
 
 HAMMER_TYPE = "hammer"
