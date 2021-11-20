@@ -1,7 +1,7 @@
 import random
 import pygame
 
-from components.powerups.hammer_power_up import HammerPowerUp
+from components.powerups.martilloPower_up import MartilloPowerUp
 from components.powerups.shield import Shield
 from utils.constants import HAMMER_POWER_UP
 
@@ -23,13 +23,12 @@ class PowerUpManager:
         self.points = points
         if len(self.power_ups) == 0:
             if self.when_appears == self.points:
-                print("generating powerup")
                 self.when_appears = random.randint(self.when_appears + 200, self.when_appears + 250)
                 random.shuffle(self.option_numbers)
                 if self.option_numbers[0] <= 5:
                     self.power_ups.append(Shield())
                 else:
-                    self.power_ups.append(HammerPowerUp())
+                    self.power_ups.append(MartilloPowerUp())
             return self.power_ups
 
     def update(self, points, game_speed, player):
@@ -46,7 +45,7 @@ class PowerUpManager:
                     time_random = random.randrange(5, 8)
                     player.shield_time_up = power_up.start_time + (time_random * 1000)
                     self.power_ups.remove(power_up)
-                elif isinstance(power_up, HammerPowerUp):
+                elif isinstance(power_up, MartilloPowerUp):
                     player.hammer_enabled = HAMMER_POWER_UP
                     player.type = power_up.type
                     self.power_ups.remove(power_up)

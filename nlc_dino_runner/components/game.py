@@ -5,7 +5,7 @@ from components.obstacles.cactus import Cactus
 from components.obstacles.obstacle_manager import ObstacleManager
 from components.powerups.power_up_manager import PowerUpManager
 from utils import text_utils
-from utils.constants import TITTLE, ICON, SCREEN_WIDTH, SCREEN_HEIGHT, BG, FPS, RUNNING
+from utils.constants import TITTLE, ICON, SCREEN_WIDTH, SCREEN_HEIGHT, BG, FPS, RUNNING, IMG_DIR
 from components.dinosaur import Dinosaur
 
 
@@ -39,6 +39,7 @@ class Game:
             self.draw()
 
     def execute(self):
+        text_utils.emitir_sonido('mixkit-ominous-drums-227.wav')
         while self.running:
             if not self.playing:
                 self.show_menu()
@@ -93,7 +94,7 @@ class Game:
 
     def score(self):
         self.points += 1
-        if self.points % 20 == 0:
+        if self.points % 100 == 0:
             self.game_speed += 1
         score_element, score_element_rect = text_utils.get_score_element(self.points)
         self.screen.blit(score_element, score_element_rect)
